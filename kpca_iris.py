@@ -3,32 +3,43 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # load dataset into Pandas DataFrame
-df = pd.read_csv("D:\Python_programs\ML\Iris Data\KPCA\iris.csv")
+emb_file_path = 'sanfrancisco/sanfrancisco_raw_feature_crossing.embeddings'
+# df = pd.read_csv(emb_file_path)
+df = pd.read_csv(emb_file_path, header=None, sep=' ', index_col=0)
 #df.to_csv('iris.csv')
 
 
 from sklearn.preprocessing import StandardScaler
-features = ['sepal length', 'sepal width', 'petal length', 'petal width']
+# features = ['sepal length', 'sepal width', 'petal length', 'petal width']
 # Separating out the features
-x = df.loc[:, features].values
+# x = df.loc[:, features].values
+
+rows_size, cols_size = df.shape
+x = df
+
 # Separating out the target
-y = df.loc[:,['target']].values
+# y = df.loc[:,['target']].values
+
 # Standardizing the features
 x = StandardScaler().fit_transform(x)
 
-from sklearn.decomposition import KernelPCA
 
+from sklearn.decomposition import KernelPCA
 
 ## Finding the principle components
 #   KERNELS : linear,rbf,poly
 #
 
+
 def Kernel_Pca(ker):
-    kpca = KernelPCA(n_components=4, kernel=ker, gamma=15)
-    x_kpca = kpca.fit_transform(x)
+    kpca = KernelPCA(n_components=128, kernel=ker, gamma=15)
+    # x_kpca = kpca.fit_transform(x)
+    print('training in ', ker)
     kpca_transform = kpca.fit_transform(x)
     explained_variance = np.var(kpca_transform, axis=0)
     ev = explained_variance / np.sum(explained_variance)
+
+    print('training done!')
 
     #--------- Bar Graph for Explained Variance Ratio ------------
     plt.bar([1,2,3,4],list(ev*100),label='Principal Components',color='b')
@@ -80,6 +91,7 @@ def Kernel_Pca(ker):
 
 
 #------------------------------------------------------
-k=['linear','rbf','poly']
+# k=['linear','rbf','poly']
+k = ['linear']
 for i in k:
     Kernel_Pca(i)
