@@ -4,6 +4,7 @@ import pandas as pd
 
 # load dataset into Pandas DataFrame
 emb_file_path = 'sanfrancisco/sanfrancisco_raw_feature_crossing.embeddings'
+kpca_emb_file_path = 'sanfrancisco/sanfrancisco_kpca_crossing.embeddings'
 # df = pd.read_csv(emb_file_path)
 df = pd.read_csv(emb_file_path, header=None, sep=' ', index_col=0)
 #df.to_csv('iris.csv')
@@ -31,11 +32,19 @@ from sklearn.decomposition import KernelPCA
 #
 
 
+def save_embeddings(embeddings, output_file_path):
+    with open(output_file_path, 'w+') as f:
+        for embedding in embeddings:
+            f.write(' '.join(map(str, embedding)))
+            f.write('\n')
+
+
 def Kernel_Pca(ker):
     kpca = KernelPCA(n_components=128, kernel=ker, gamma=15)
     # x_kpca = kpca.fit_transform(x)
     print('training in ', ker)
     kpca_transform = kpca.fit_transform(x)
+    save_embeddings(kpca_transform, kpca_emb_file_path)
     explained_variance = np.var(kpca_transform, axis=0)
     ev = explained_variance / np.sum(explained_variance)
 
