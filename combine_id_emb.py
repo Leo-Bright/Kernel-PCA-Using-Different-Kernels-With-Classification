@@ -32,8 +32,8 @@ def combine_id_emb(raw_emb, kpca_emb, output):
 
 if __name__ == '__main__':
 
-    raw_feature_path = 'sanfrancisco/sanfrancisco_raw_feature_crossing.embeddings'
-    kpca_emb_path = 'sanfrancisco/sanfrancisco_kpca_crossing.embeddings'
-    combined_emb_path =  'sanfrancisco/sanfrancisco_combined_kpca_crossing.embeddings'
+    raw_feature_path = 'sanfrancisco/sanfrancisco_raw_feature_traffic.embeddings'
+    kpca_emb_path = 'sanfrancisco/sanfrancisco_kpca_traffic_128d.embeddings'
+    combined_emb_path =  'sanfrancisco/sanfrancisco_combined_kpca_traffic_128d.embeddings'
 
     combine_id_emb(raw_feature_path, kpca_emb_path, combined_emb_path)
