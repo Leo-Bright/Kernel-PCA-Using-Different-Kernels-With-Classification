@@ -4,8 +4,9 @@ from sklearn.decomposition import PCA
 
 
 # load dataset into Pandas DataFrame
-emb_file_path = 'sanfrancisco/sanfrancisco_raw_feature_crossing.embeddings'
-pca_emb_file_path = 'sanfrancisco/sanfrancisco_pca_crossing_8d.embeddings'
+dimension = 6
+emb_file_path = 'sanfrancisco/sanfrancisco_raw_feature_traffic.embeddings'
+pca_emb_file_path = 'sanfrancisco/sanfrancisco_pca_traffic_' + str(dimension) + 'd.embeddings'
 df = pd.read_csv(emb_file_path, header=None, sep=' ', index_col=0)
 
 rows_size, cols_size = df.shape
@@ -23,7 +24,7 @@ def save_embeddings(embeddings, output_file_path):
 
 
 def Pca():
-    pca = PCA(n_components=8)
+    pca = PCA(n_components=dimension)
     print('training pca model: ')
     pca_transform = pca.fit_transform(x)
     save_embeddings(pca_transform, pca_emb_file_path)
